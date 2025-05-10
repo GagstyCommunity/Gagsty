@@ -245,14 +245,14 @@ const GameView = () => {
                       </div>
                       <div className="overflow-hidden rounded-lg border border-gray-800 h-24">
                         <img 
-                          src={displayGame.thumbnail}
+                          src={displayGame.thumbnail || "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=60"}
                           alt="Game visual 2"
                           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                         />
                       </div>
                       <div className="overflow-hidden rounded-lg border border-gray-800 h-24">
                         <img 
-                          src={displayGame.thumbnail}
+                          src={displayGame.thumbnail || "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=60"}
                           alt="Game visual 3"
                           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                         />
@@ -355,7 +355,7 @@ const GameView = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-400">Chips Earned</span>
-                        <span className="text-[#FFCF44] font-medium">{displayGame.chipsEarned.toLocaleString()}</span>
+                        <span className="text-[#FFCF44] font-medium">{(displayGame.chipsEarned || 0).toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-400">Rating</span>
@@ -764,18 +764,18 @@ const GameView = () => {
                     
                     <div className="mb-6">
                       <div className="text-center">
-                        <div className="text-4xl font-bold text-[#FFCF44]">{displayGame.chipsEarned.toLocaleString()}</div>
+                        <div className="text-4xl font-bold text-[#FFCF44]">{(displayGame.chipsEarned || 0).toLocaleString()}</div>
                         <div className="text-sm text-gray-400">Total Chips Earned</div>
                       </div>
                       
                       <div className="mt-6 grid grid-cols-2 gap-4">
                         <div className="text-center p-3 bg-gray-800/60 rounded-lg">
-                          <div className="text-lg font-bold text-primary">{Math.round(displayGame.chipsEarned * 0.6).toLocaleString()}</div>
+                          <div className="text-lg font-bold text-primary">{Math.round((displayGame.chipsEarned || 0) * 0.6).toLocaleString()}</div>
                           <div className="text-xs text-gray-400">Your Share (60%)</div>
                         </div>
                         
                         <div className="text-center p-3 bg-gray-800/60 rounded-lg">
-                          <div className="text-lg font-bold text-[#FF8855]">{Math.round(displayGame.chipsEarned * 0.1).toLocaleString()}</div>
+                          <div className="text-lg font-bold text-[#FF8855]">{Math.round((displayGame.chipsEarned || 0) * 0.1).toLocaleString()}</div>
                           <div className="text-xs text-gray-400">Referrals (10%)</div>
                         </div>
                       </div>
