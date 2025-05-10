@@ -1,7 +1,6 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { FaArrowRight, FaCoins, FaTelegram } from "react-icons/fa";
-import { FaWandMagicSparkles } from "react-icons/fa6";
+import { FaArrowRight, FaCoins, FaTelegram, FaMagic } from "react-icons/fa";
 import { GAME_STATS } from "@/config/constants";
 
 const Hero = () => {
@@ -68,7 +67,7 @@ const Hero = () => {
             <div className="relative rounded-xl overflow-hidden gradient-card border border-gray-800">
               {/* Animated demo showing prompt to game conversion */}
               <div className="absolute top-4 left-4 z-10 bg-darkBase/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-gray-300 border border-gray-700">
-                <FaWandMagicSparkles className="text-primary inline mr-1" /> Prompt → Game Demo
+                <FaMagic className="text-primary inline mr-1" /> Prompt → Game Demo
               </div>
               {/* A gaming interface with futuristic elements */}
               <img 

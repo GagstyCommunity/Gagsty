@@ -1,11 +1,17 @@
 import { Helmet } from "react-helmet";
 import IntegrationFeatures from "@/components/telegram/IntegrationFeatures";
+import { RouteComponentProps } from "wouter";
 
 interface TelegramIntegrationProps {
   isHomepage?: boolean;
 }
 
-const TelegramIntegration = ({ isHomepage = false }: TelegramIntegrationProps) => {
+// Combine RouteComponentProps with our custom props
+type CombinedProps = TelegramIntegrationProps & RouteComponentProps;
+
+const TelegramIntegration = (props: CombinedProps) => {
+  // Extract our custom prop with a default value
+  const { isHomepage = false } = props;
   return (
     <>
       {!isHomepage && (

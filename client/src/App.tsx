@@ -24,9 +24,15 @@ function Router() {
           <Route path="/" component={Home} />
           <Route path="/create-game" component={CreateGame} />
           <Route path="/games" component={Games} />
-          <Route path="/game/:id" component={GameView} />
+          <Route path="/game/:slug" component={GameView} />
           <Route path="/earn" component={Earn} />
+          <Route path="/learn-hub" component={NotFound} />
+          <Route path="/chips" component={Token} />
           <Route path="/token" component={Token} />
+          <Route path="/jobs" component={NotFound} />
+          <Route path="/partners" component={NotFound} />
+          <Route path="/about" component={NotFound} />
+          <Route path="/help" component={NotFound} />
           <Route path="/telegram-integration" component={TelegramIntegration} />
           {/* Fallback to 404 */}
           <Route component={NotFound} />

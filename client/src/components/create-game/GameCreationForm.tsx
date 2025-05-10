@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { GAME_TYPES, MONETIZATION_OPTIONS } from "@/config/gameTypes";
-import { FaWandMagicSparkles, FaQuestionCircle, FaUpload } from "react-icons/fa";
+import { FaMagic, FaQuestionCircle, FaUpload, FaTelegram } from "react-icons/fa";
 
 const GameCreationForm = () => {
   const [, navigate] = useLocation();
@@ -133,8 +133,8 @@ const GameCreationForm = () => {
                 className={`flex flex-col items-center justify-center p-4 bg-gray-800/80 border border-gray-700 rounded-lg cursor-pointer peer-checked:border-[${type.iconColor}] peer-checked:bg-[${type.iconColor}]/20 transition-all`}
               >
                 {type.id === 'mini-app' && <FaTelegram className={`text-2xl text-[${type.iconColor}] mb-2`} />}
-                {type.id === 'web-game' && <FaWandMagicSparkles className={`text-2xl text-[${type.iconColor}] mb-2`} />}
-                {type.id === 'mobile' && <FaWandMagicSparkles className={`text-2xl text-[${type.iconColor}] mb-2`} />}
+                {type.id === 'web-game' && <FaMagic className={`text-2xl text-[${type.iconColor}] mb-2`} />}
+                {type.id === 'mobile' && <FaMagic className={`text-2xl text-[${type.iconColor}] mb-2`} />}
                 <span className="text-sm font-medium">{type.name}</span>
               </label>
             </div>
@@ -161,7 +161,7 @@ const GameCreationForm = () => {
                 htmlFor={option.id}
                 className={`flex items-center p-3 bg-gray-800/80 border border-gray-700 rounded-lg cursor-pointer peer-checked:border-[${option.iconColor}] peer-checked:bg-[${option.iconColor}]/10 transition-all`}
               >
-                <FaWandMagicSparkles className={`text-[${option.iconColor}] mr-3`} />
+                <FaMagic className={`text-[${option.iconColor}] mr-3`} />
                 <span className="text-sm">{option.name}</span>
               </label>
             </div>
@@ -196,7 +196,7 @@ const GameCreationForm = () => {
           className="bg-primary hover:bg-primary/90 text-white primary-glow"
           disabled={createGameMutation.isPending}
         >
-          <FaWandMagicSparkles className="mr-2" />
+          <FaMagic className="mr-2" />
           {createGameMutation.isPending ? "Creating..." : "Create Game Now"}
         </Button>
         <Button 

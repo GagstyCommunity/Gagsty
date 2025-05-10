@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useLocation } from "wouter";
 import { Helmet } from "react-helmet";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +12,8 @@ import {
   FaCode, 
   FaUserPlus, 
   FaTrophy, 
-  FaCalendarCheck, 
+  FaCalendarCheck,
+  FaGamepad,
   FaTasks,
   FaArrowRight,
   FaShareAlt,
@@ -33,6 +34,20 @@ const GameView = () => {
   
   // Fallback to sample game if API fails or while loading
   const displayGame = game || SAMPLE_GAMES.find(g => g.id.toString() === id) || SAMPLE_GAMES[0];
+  
+  // For demo purposes - chip counter animation
+  const [chipCount, setChipCount] = useState(displayGame.chipsEarned);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Randomly increment the counter occasionally
+      if (Math.random() > 0.7) {
+        setChipCount(prev => prev + Math.floor(Math.random() * 5) + 1);
+      }
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, []);
   
   if (isLoading) {
     return (
@@ -81,32 +96,38 @@ const GameView = () => {
             {/* Game Info */}
             <div className="lg:col-span-2">
               <div className="flex flex-wrap justify-between items-start mb-4">
-                <h1 className="text-3xl font-bold text-white">{displayGame.title}</h1>
-                <div className="flex items-center bg-[#FFCF44]/20 px-3 py-1 rounded text-sm mt-2 sm:mt-0">
+                <div>
+                  <h1 className="text-3xl font-bold text-white">{displayGame.title}</h1>
+                  <div className="flex items-center mt-2">
+                    <div className="w-8 h-8 rounded-full bg-gray-700 mr-2 flex items-center justify-center text-xs">
+                      {displayGame.creator?.substring(0, 2).toUpperCase()}
+                    </div>
+                    <span className="text-gray-300">Created by <span className="text-accent">@{displayGame.creator}</span></span>
+                    <span className="mx-2 text-gray-600">•</span>
+                    <span className="text-gray-300 text-sm">{displayGame.gameType === 'mini-app' ? 'Telegram Mini App' : 
+                     displayGame.gameType === 'web-game' ? 'Web Game' : 'Mobile Game'}</span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center bg-[#FFCF44]/20 px-3 py-2 rounded-lg text-sm mt-2 sm:mt-0 animate-pulse">
                   <FaCoins className="text-[#FFCF44] mr-2" />
-                  <span className="text-[#FFCF44] font-semibold">{displayGame.chipsEarned.toLocaleString()} Chips Earned</span>
+                  <span className="text-[#FFCF44] font-semibold">{chipCount.toLocaleString()} Chips Earned</span>
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap gap-2 mb-4">
+                <div className="bg-primary/20 text-primary text-xs px-2 py-1 rounded-full flex items-center">
+                  <FaBrain className="mr-1 text-xs" /> AI-made
+                </div>
+                <div className="bg-[#229ED9]/20 text-[#229ED9] text-xs px-2 py-1 rounded-full flex items-center">
+                  <FaTelegram className="mr-1 text-xs" /> Telegram Mini App
+                </div>
+                <div className="bg-[#FFCF44]/20 text-[#FFCF44] text-xs px-2 py-1 rounded-full flex items-center">
+                  <FaCoins className="mr-1 text-xs" /> Earnable
                 </div>
               </div>
               
               <p className="text-gray-300 mb-6">{displayGame.description}</p>
-              
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                <div className="flex items-center text-gray-400 text-sm">
-                  <div className="w-8 h-8 rounded-full bg-gray-700 mr-2"></div>
-                  <span>Created by <span className="text-accent">@{displayGame.creator}</span></span>
-                </div>
-                
-                <div className="flex items-center text-gray-400 text-sm">
-                  <span>Created: {new Date(displayGame.createdAt).toLocaleDateString()}</span>
-                </div>
-                
-                <div className="flex items-center text-gray-400 text-sm">
-                  <span className="bg-primary/20 text-primary text-xs px-2 py-1 rounded-full">
-                    {displayGame.gameType === 'mini-app' ? 'Telegram Mini App' : 
-                     displayGame.gameType === 'web-game' ? 'Web Game' : 'Mobile Game'}
-                  </span>
-                </div>
-              </div>
               
               <div className="flex flex-wrap gap-4">
                 <Button 
@@ -124,12 +145,21 @@ const GameView = () => {
                   <FaGlobe className="mr-2" /> Play on Web
                 </Button>
                 
-                <Button 
-                  variant="outline"
-                  className="border-gray-700 text-gray-300 hover:bg-gray-800"
-                >
-                  <FaShareAlt className="mr-2" /> Share
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline"
+                    className="border-gray-700 text-gray-300 hover:bg-gray-800"
+                  >
+                    <FaShareAlt className="mr-2" /> Share
+                  </Button>
+                  
+                  <Button 
+                    variant="outline"
+                    className="border-accent/30 text-accent hover:bg-accent/10"
+                  >
+                    <FaStar className="mr-2" /> Favorite
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -167,10 +197,10 @@ const GameView = () => {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-6">
                   <div className="gradient-card rounded-xl p-6 border border-gray-800">
-                    <h3 className="text-xl font-medium text-white mb-4">Game Description</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">Game Details</h3>
                     <p className="text-gray-300">{displayGame.description}</p>
                     
-                    <h4 className="text-lg font-medium text-white mt-6 mb-3">Features</h4>
+                    <h4 className="text-lg font-medium text-white mt-6 mb-3">Mechanics & Storyline</h4>
                     <ul className="space-y-2 text-gray-300">
                       <li className="flex items-center">
                         <span className="text-accent mr-2">•</span> Engaging gameplay with intuitive controls
@@ -185,19 +215,109 @@ const GameView = () => {
                         <span className="text-accent mr-2">•</span> Regular content updates and new challenges
                       </li>
                     </ul>
+                    
+                    <h4 className="text-lg font-medium text-white mt-6 mb-3">Visual Samples</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+                      <div className="overflow-hidden rounded-lg border border-gray-800 h-24">
+                        <img 
+                          src={displayGame.thumbnail}
+                          alt="Game visual 1"
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="overflow-hidden rounded-lg border border-gray-800 h-24">
+                        <img 
+                          src={displayGame.thumbnail}
+                          alt="Game visual 2"
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="overflow-hidden rounded-lg border border-gray-800 h-24">
+                        <img 
+                          src={displayGame.thumbnail}
+                          alt="Game visual 3"
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                    </div>
+                    
+                    <h4 className="text-lg font-medium text-white mt-6 mb-3">Upgrades & Special Items</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="bg-gray-800/40 p-3 rounded-lg border border-gray-800 flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mr-3">
+                          <FaChartLine className="text-primary" />
+                        </div>
+                        <div>
+                          <h5 className="text-sm font-medium text-white">2x Speed Boost</h5>
+                          <p className="text-xs text-gray-400">Double your character's speed for 30 seconds</p>
+                        </div>
+                      </div>
+                      <div className="bg-gray-800/40 p-3 rounded-lg border border-gray-800 flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center mr-3">
+                          <FaStar className="text-accent" />
+                        </div>
+                        <div>
+                          <h5 className="text-sm font-medium text-white">Power Shield</h5>
+                          <p className="text-xs text-gray-400">Protect from damage for 15 seconds</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="gradient-card rounded-xl p-6 border border-gray-800">
-                    <h3 className="text-xl font-medium text-white mb-4">How to Play</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">Community Comments</h3>
                     <div className="space-y-4">
                       <div className="bg-gray-800/60 p-4 rounded-lg">
-                        <h4 className="text-white font-medium mb-2">Telegram Mini App</h4>
-                        <p className="text-gray-400 text-sm">Launch the game directly from Telegram by clicking the "Play on Telegram" button above.</p>
+                        <div className="flex items-center mb-2">
+                          <div className="w-8 h-8 rounded-full bg-primary/20 mr-2 flex items-center justify-center text-xs">GT</div>
+                          <div>
+                            <h5 className="text-sm font-medium text-white">GameTester92</h5>
+                            <div className="flex text-[#FFCF44] text-xs">
+                              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-gray-300 text-sm">Amazing gameplay! The controls are super responsive and the graphics are stunning.</p>
                       </div>
                       
                       <div className="bg-gray-800/60 p-4 rounded-lg">
-                        <h4 className="text-white font-medium mb-2">Web Browser</h4>
-                        <p className="text-gray-400 text-sm">Play in your browser by clicking the "Play on Web" button above. Works on desktop and mobile devices.</p>
+                        <div className="flex items-center mb-2">
+                          <div className="w-8 h-8 rounded-full bg-accent/20 mr-2 flex items-center justify-center text-xs">PF</div>
+                          <div>
+                            <h5 className="text-sm font-medium text-white">PixelFan</h5>
+                            <div className="flex text-[#FFCF44] text-xs">
+                              <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-gray-300 text-sm">Very addictive! Could use more levels but overall a great experience.</p>
+                      </div>
+                      
+                      <Button className="w-full mt-2" variant="outline">
+                        Load More Comments
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div className="gradient-card rounded-xl p-6 border border-gray-800">
+                    <h3 className="text-xl font-medium text-white mb-4">Platform Availability</h3>
+                    <div className="flex flex-wrap gap-3">
+                      <div className="bg-[#229ED9]/10 border border-[#229ED9]/30 rounded-lg p-4 flex flex-col items-center justify-center text-center flex-1">
+                        <FaTelegram className="text-[#229ED9] text-3xl mb-2" />
+                        <h4 className="text-white font-medium mb-1">Telegram</h4>
+                        <p className="text-gray-400 text-xs">Mini App</p>
+                      </div>
+                      
+                      <div className="bg-gray-800/40 border border-gray-700 rounded-lg p-4 flex flex-col items-center justify-center text-center flex-1">
+                        <FaGlobe className="text-gray-300 text-3xl mb-2" />
+                        <h4 className="text-white font-medium mb-1">Web</h4>
+                        <p className="text-gray-400 text-xs">Browser Game</p>
+                      </div>
+                      
+                      <div className="bg-gray-800/20 border border-gray-800 rounded-lg p-4 flex flex-col items-center justify-center text-center flex-1">
+                        <FaGamepad className="text-gray-600 text-3xl mb-2" />
+                        <h4 className="text-gray-400 font-medium mb-1">Mobile</h4>
+                        <p className="text-gray-500 text-xs">Coming Soon</p>
                       </div>
                     </div>
                   </div>
@@ -284,22 +404,45 @@ const GameView = () => {
                       </div>
                       
                       <div className="bg-gray-800/60 p-4 rounded-lg">
-                        <h4 className="text-white font-medium mb-2">2. Auto-Generated JSON Config</h4>
-                        <p className="text-gray-400 text-sm mb-2">Use this configuration for your Telegram Mini App setup:</p>
+                        <h4 className="text-white font-medium mb-2">2. Auto-Generated JSON Config with startParam</h4>
+                        <p className="text-gray-400 text-sm mb-2">Use this configuration for your Telegram Mini App setup with referral tracking:</p>
                         <div className="bg-gray-900 p-3 rounded-lg border border-gray-700 overflow-x-auto">
                           <pre className="text-xs text-gray-300 font-mono"><code>{`{
   "name": "${displayGame.title}",
-  "description": "${displayGame.description.substring(0, 50)}...",
-  "botUsername": "${displayGame.title.toLowerCase().replace(/\s+/g, '')}Bot",
-  "startParam": "play_game_${id}",
-  "payload": "play_game_${id}",
+  "description": "${displayGame.description?.substring(0, 50)}...",
+  "botUsername": "${displayGame.title?.toLowerCase().replace(/\s+/g, '')}Bot",
+  "startParam": "${id}-userId-affiliateCode",
+  "payload": "gameId=${id}",
   "features": ["dailyRewards", "inviteFriends", "leaderboard"]
 }`}</code></pre>
                         </div>
                       </div>
                       
                       <div className="bg-gray-800/60 p-4 rounded-lg">
-                        <h4 className="text-white font-medium mb-2">3. Webhook Integration</h4>
+                        <h4 className="text-white font-medium mb-2">3. Viral Growth Features</h4>
+                        <p className="text-gray-400 text-sm mb-2">Implement these features to maximize user engagement and virality:</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+                          <div className="flex items-center bg-gray-900 p-2 rounded border border-gray-800">
+                            <FaUserPlus className="text-accent mr-2" />
+                            <span className="text-gray-300 text-xs">Invite-to-Play (2x XP)</span>
+                          </div>
+                          <div className="flex items-center bg-gray-900 p-2 rounded border border-gray-800">
+                            <FaCalendarCheck className="text-accent mr-2" />
+                            <span className="text-gray-300 text-xs">Daily Rewards</span>
+                          </div>
+                          <div className="flex items-center bg-gray-900 p-2 rounded border border-gray-800">
+                            <FaTrophy className="text-accent mr-2" />
+                            <span className="text-gray-300 text-xs">Leaderboard</span>
+                          </div>
+                          <div className="flex items-center bg-gray-900 p-2 rounded border border-gray-800">
+                            <FaTasks className="text-accent mr-2" />
+                            <span className="text-gray-300 text-xs">Game Challenges</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-gray-800/60 p-4 rounded-lg">
+                        <h4 className="text-white font-medium mb-2">4. Webhook Integration</h4>
                         <p className="text-gray-400 text-sm">Set up webhook integration to receive real-time updates from your Telegram Mini App.</p>
                         <div className="mt-2">
                           <Button 

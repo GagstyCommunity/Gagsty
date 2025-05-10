@@ -1,5 +1,6 @@
 import { useLocation } from "wouter";
-import { FaWandMagicSparkles, FaGamepad } from "react-icons/fa6";
+import { FaMagic } from "react-icons/fa";
+import { FaGamepad } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 
 const StickyCreateGameCTA = () => {
@@ -17,7 +18,7 @@ const StickyCreateGameCTA = () => {
             onClick={() => setLocation("/create-game")}
             className="bg-primary hover:bg-primary/90 text-white primary-glow"
           >
-            <FaWandMagicSparkles className="mr-2" />
+            <FaMagic className="mr-2" />
             Build Game
           </Button>
           <Button 
