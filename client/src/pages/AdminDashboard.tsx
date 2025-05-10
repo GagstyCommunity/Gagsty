@@ -301,9 +301,12 @@ export default function AdminDashboard() {
                             <div>
                               <h3 className="text-white font-medium mb-2">Telegram Mini App Data</h3>
                               <div className="p-3 bg-gray-800 rounded-lg text-gray-300 text-sm">
-                                <pre className="whitespace-pre-wrap">
-                                  {JSON.stringify(selectedGame.telegramMiniAppData || {}, null, 2)}
-                                </pre>
+                                <div className="whitespace-pre-wrap">
+                                  {typeof selectedGame.telegramMiniAppData === 'object' 
+                                    ? JSON.stringify(selectedGame.telegramMiniAppData, null, 2)
+                                    : String(selectedGame.telegramMiniAppData)
+                                  }
+                                </div>
                               </div>
                             </div>
                           )}

@@ -11,7 +11,8 @@ import {
   FaBriefcase,
   FaHandshake,
   FaInfoCircle,
-  FaQuestionCircle
+  FaQuestionCircle,
+  FaSearch
 } from "react-icons/fa";
 import {
   Sheet,
