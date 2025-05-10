@@ -27,6 +27,7 @@ const Navbar = () => {
     { name: "Home", path: "/", icon: <FaGamepad className="mr-2" /> },
     { name: "Create Game", path: "/create-game", icon: <FaGamepad className="mr-2" /> },
     { name: "Game Directory", path: "/games", icon: <FaGamepad className="mr-2" /> },
+    { name: "Dashboard", path: "/dashboard", icon: <FaChartLine className="mr-2" /> },
     { name: "Earn & Badges", path: "/earn", icon: <FaCoins className="mr-2" /> },
     { name: "Learn Hub", path: "/learn-hub", icon: <FaGraduationCap className="mr-2" /> },
     { name: "Gagsty Chips", path: "/chips", icon: <FaCoins className="mr-2" /> },

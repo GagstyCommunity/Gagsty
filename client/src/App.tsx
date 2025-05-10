@@ -11,6 +11,8 @@ import Home from "@/pages/Home";
 import CreateGame from "@/pages/CreateGame";
 import Games from "@/pages/Games";
 import GameView from "@/pages/GameView";
+import Dashboard from "@/pages/Dashboard";
+import AdminDashboard from "@/pages/AdminDashboard";
 import Earn from "@/pages/Earn";
 import Token from "@/pages/Token";
 import TelegramIntegration from "@/pages/TelegramIntegration";
@@ -25,6 +27,8 @@ function Router() {
           <Route path="/create-game" component={CreateGame} />
           <Route path="/games" component={Games} />
           <Route path="/game/:slug" component={GameView} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/admin" component={AdminDashboard} />
           <Route path="/earn" component={Earn} />
           <Route path="/learn-hub" component={NotFound} />
           <Route path="/chips" component={Token} />
