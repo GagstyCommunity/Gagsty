@@ -1,0 +1,41 @@
+Here’s a **color palette** for **Gagsty.com (Live Prompt-to-Game Platform)** that fits your vision of **AI + futuristic + Web3 + youth gamer vibe** — while staying professional, cyberpunk, and Telegram-integrated.
+
+---
+
+## 🎨 **Gagsty Brand Color Scheme**
+
+| Element            | Color Name         | Hex Code              | Usage                                         |
+| ------------------ | ------------------ | --------------------- | --------------------------------------------- |
+| 🟣 Primary         | Neon Purple        | `#5D2E8C`             | Main CTA buttons, hero text, highlights       |
+| 💚 Accent          | Futuristic Green   | `#2D9B4F`             | Status tags, Chips earned, success indicators |
+| ⚫ Dark Base        | Deep Gray-Black    | `#121212`             | Page background, cards, headers               |
+| ⚪ Light Base       | Soft White         | `#FFFFFF`             | Content areas, text blocks, modals            |
+| 🧊 UI Elements     | Neon Cyan          | `#00E0FF`             | Inputs, links, chips icons, badges            |
+| 🔵 Telegram Blue   | Telegram Link Blue | `#229ED9`             | Used for Telegram-specific buttons & links    |
+| 🟡 Warning         | Alert Yellow       | `#FFCF44`             | Prompts, lootbox alerts, time-limited events  |
+| 🔴 Danger          | Alert Red          | `#FF4B4B`             | Fraud detection, abuse reports, banned tags   |
+| 🟠 Highlight       | Holo Orange        | `#FF8855`             | Tooltip hovers, stats, upgrades, powerups     |
+| 🌫️ Secondary Gray | Neutral Gray       | `#F4F4F4` / `#D1D1D1` | Inputs, disabled elements, dividers           |
+
+---
+
+### ✨ Additional Styles
+
+* **Buttons**:
+
+  * Primary: `#5D2E8C` background with `#FFFFFF` bold text
+  * Secondary: `#2D9B4F` border + text, transparent bg
+* **Badges**:
+
+  * Beginner: Light Gray
+  * Tester: Green
+  * Dev: Blue
+  * Growth Hacker: Orange
+  * Moderator: Red
+* **Modals**: `#FFFFFF` background, `#5D2E8C` title bar
+* **Game Cards**: Gradient: `linear-gradient(to bottom, #1A1A1A, #121212)`
+* **Hover Effects**: Glowing border in `#00E0FF` or `#5D2E8C`
+
+---
+
+Would you like a **Tailwind config**, **Figma theme file**, or **CSS variables** version of this next?

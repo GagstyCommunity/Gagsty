@@ -1,0 +1,178 @@
+GAGSTY.COM
+### 🏠 1. HOME PAGE
+
+* Hero: “Turn Your Idea into a Game in Minutes. No Code. AI Powered. Play-to-Own.”
+* CTA: `Create Game Now` | `Join Community` | `Earn Gagsty Chips`
+* Animated video / demo slider of prompt → live game
+* Show stats: Total games, users, creators rewarded, Chips earned
+* Showcase featured games + testimonials
+* Sticky CTA: “Build Game → Submit Prompt”
+
+---
+
+### 🧠 2. HOW IT WORKS *(Prompt to Game Flow)*
+
+* Step-by-step visual flow:
+
+  1. Write a Game Prompt (idea, genre, characters)
+  2. AI + Gagsty Engine builds game logic
+  3. Telegram Mini App / Web Version auto-deployed
+  4. You share, earn, upgrade with Gagsty Chips
+* Show supported types: Telegram Mini Apps, 2D Web Games, 3D Godot builds
+
+---
+
+### 🕹️ 3. CREATE GAME
+
+* Prompt submission interface:
+
+  * Game title
+  * 150-word game idea prompt
+  * Choose type: Mini App / Web Game / Mobile
+  * Monetization type: In-game Chips / Ads / Referral / Upgrade
+  * Upload assets (optional)
+* ⚠️ Logic: Only users who stake \$1000 or Gagsty Chips can build advanced games (except under-18 earners)
+
+---
+
+### 🎮 4. GAME HUB (Live Game Directory)
+
+* Filters:
+
+  * 🧠 AI-Powered
+  * 🫂 Community Built
+  * 🔥 Trending
+  * 🧪 Beta Tests
+  * 🎁 Earnable Games
+* Game Cards: Thumbnail + Title + Play Now + Creator + Chips Earned
+* Telegram + Web buttons
+
+---
+
+### 📱 5. TELEGRAM INTEGRATION GUIDE *(Visible only after Game Creation)*
+
+* Walkthrough: How to link Telegram Mini App
+* How to launch bot
+* Auto-generate JSON Mini App + buttons
+* Viral Growth Features:
+
+  * Invite-to-Play (get 2x XP or Chips)
+  * Daily Rewards
+  * Leaderboard (Weekly + All-time)
+  * Game Challenges (auto-generated from prompt)
+  * Spin the Wheel / Lootboxes
+  * Upgrade tokens (2x, 3x, 10x)
+  * Gagsty Chips = currency for boosts
+* ⚙️ Webhooks + n8n flows for devs
+
+---
+
+### 🏆 6. EARN & BADGES
+
+* Tasks:
+
+  * Submit Prompts
+  * Moderate Games
+  * Test Bugs
+  * Refer Users
+  * Complete Quests
+* Badge System:
+
+  * 🔰 Beginner, 🎯 Tester, 🎨 Designer, 🧠 Dev, 🧩 Growth Hacker, 🛡️ Moderator, 🤝 Partner
+* Chips & Revenue Split System
+
+  * 60% for creator
+  * 10% referral bonus
+  * 30% to Gagsty
+
+---
+
+### 💼 7. GIGS & JOBS (Community Driven)
+
+* Create Game Assets, Designs, Icons, Scripts
+* Hire testers/mods/designers
+* Gig types: Fixed / Earn-based / Chip-rewarded
+* Apply with badge history
+
+---
+
+### 🧑‍💻 8. USER DASHBOARD
+
+* My Games
+* Submitted Prompts
+* Earned Chips
+* Badges & Ranks
+* Analytics: Views, Plays, Earnings
+* Claim Section: Rewards, partner deals, promo tools
+
+---
+
+### 🏢 9. ADMIN & TEAM DASHBOARD (Hidden/Internal)
+
+* Approve games
+* Moderate community
+* Track Chips & badge logic
+* Manage prompt competitions
+* Partner & investor onboarding
+
+---
+
+### 🔍 10. SEARCH + FILTER ENGINE
+
+* Search games, creators, badges, prompt types
+* Filter by Chips earned, game type, date, platform
+
+---
+
+### 📚 11. LEARN HUB / BLOGS
+
+* Guides: “How to Write a Winning Prompt”, “Earn \$1000 from Telegram Game”, “Game Marketing Hacks”
+* Creator Interviews
+* Tech Stack Updates
+* SEO-optimized content for viral growth
+
+---
+
+### 🤝 12. PARTNER WITH US
+
+* Tool partnerships
+* Telegram growth collabs
+* Game studios & AI tool integration
+* 50% lifetime affiliate revenue
+
+---
+
+### 📜 13. ABOUT US
+
+* Mission, team, community focus, and revenue share model
+
+---
+
+### 🛟 14. HELP CENTER / FAQ
+
+* How to start
+* How to earn
+* How to launch a Telegram Mini App
+* Chips vs Token logic
+* Under-18 earnings and unlocks
+
+---
+
+### 🕊️ 15. SOCIAL & COMMUNITY
+
+* Telegram Channels (Global + India + Devs)
+* Discord Server
+* YouTube Shorts / Tutorials
+* X/Twitter Feed Embed
+
+---
+
+### 🔐 16. AUTH (Public/Private Split)
+
+* Login with Telegram, Google
+* Age verification logic (Under-18 rules apply)
+* Public pages open, game creation gated
+
+---
+
+Would you like me to convert this into a **Replit prompt** for instant generation?

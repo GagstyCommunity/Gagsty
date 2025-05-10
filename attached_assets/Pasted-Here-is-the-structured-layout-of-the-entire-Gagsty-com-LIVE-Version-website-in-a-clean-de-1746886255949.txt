@@ -1,0 +1,160 @@
+Here is the **structured layout** of the entire **Gagsty.com (LIVE Version)** website in a clean, dev-friendly **nested format** — ideal for site mapping, Replit prompt building, and frontend/backend integration.
+
+---
+
+## 🧱 **GAGSTY.COM — STRUCTURE (Prompt → Game Live Platform)**
+
+```yaml
+Gagsty.com:
+  - / (Home)
+    - Hero Section (Tagline + CTA)
+    - How it Works (Steps 1-4)
+    - Featured Games Slider
+    - Stats Counter (Games, Users, Chips Earned)
+    - Testimonials
+    - CTA Sticky Bar: [Create Game Now]
+
+  - /how-it-works
+    - Visual walkthrough of 4-step flow
+    - Supported Game Types: Mini App, Web, 3D Godot
+    - Call to Action
+
+  - /create-game
+    - Prompt Input Form (Title, Description, Type)
+    - Game Type Selection (Mini App / Web / Mobile)
+    - Monetization Option (Ads / Chips / Referral)
+    - Asset Upload (Optional)
+    - Creator Eligibility Notice (Staking Logic)
+
+  - /games (Game Hub / Directory)
+    - Filters: Trending, AI, Earnable, Community
+    - Game Cards: Thumbnail, Title, Play Buttons, Chips
+    - Pagination or Infinite Scroll
+
+  - /game/:slug (Single Game View Page)
+    - Game Title, Creator Info, Tags
+    - "Play on Telegram" / "Play on Web" buttons
+    - Live Chips Counter
+    - Description, Mechanics, Upgrades
+    - Comments / Feedback
+    - Guide: Telegram Mini App Integration (Visible to Creator Only)
+      - JSON config
+      - startParam logic
+      - Webhook integration tips
+    - Affiliate & Viral Tools:
+      - Invite & Share = Rewards
+      - Star Prompt Referral Links
+      - Go Viral Tips Section
+    - Gamenomics (Per Game)
+      - Chips Source: Playing, Referral, UI Asset
+      - Chips Sink: Boosts, Lootboxes, Skins
+      - Split Logic: 60/10/30 (Creator/Referral/Platform)
+
+  - /chips (Gagsty Chips Economy)
+    - Total Supply: 100 Billion (Fixed)
+    - Earn Methods: Games, Mods, Quests, Referrals
+    - Spending Methods: Boosts, Skins, Upgrades
+    - Cannot be purchased — Earn-only economy
+
+  - /token or /gagsty-token (GAGSTY Coin Page)
+    - Token Symbol: GAGSTY
+    - Total Supply: 1 Billion
+    - Network: TON / EVM
+    - Tokenomics Table:
+        Community: 40%
+        Team: 20%
+        Ecosystem Fund: 15%
+        Advisors: 5%
+        Reserve: 10%
+        Public Round: 10%
+    - Use Cases:
+        - Convert Chips to Token
+        - Pro Game Builder Unlock
+        - Payouts & Redeem
+        - Partner Tools
+    - Roadmap:
+        - Phase 1: MVP Launch
+        - Phase 2: Community + Badge System
+        - Phase 3: Token Launch + DEX
+        - Phase 4: Game Marketplace
+        - Phase 5: Multiplayer Arena
+    - About the Gagsty Product
+
+  - /earn
+    - Task Types: Prompt, Test, Bug Hunt, Refer, Design
+    - Badge System:
+        Beginner, Tester, Dev, Designer, Growth Hacker, Partner, Moderator
+    - Chip Rewards Overview
+    - Revenue Share Logic
+
+  - /gigs-jobs
+    - Post Gigs (Assets, Coding, Design)
+    - Apply as Tester/Mod
+    - Paid in Chips
+    - Badge-based Matching System
+
+  - /dashboard (User)
+    - My Games
+    - Submitted Prompts
+    - Chips Wallet
+    - Earn History
+    - Badge & Level Progress
+    - Claim: Rewards / Tools / Deals
+
+  - /admin (Private)
+    - Prompt/Game Approval
+    - Bug Reports + Moderation
+    - Community Leaderboard
+    - Chips/Token Analytics
+    - Investor Panel
+
+  - /search
+    - Dynamic search bar + filters
+    - Games, Prompts, People, Badges, Tags
+
+  - /learn
+    - Blog Articles
+    - Prompt Writing Guide
+    - Telegram Game Marketing Hacks
+    - AI Tools for Creators
+
+  - /partners
+    - Tool Integrations
+    - Telegram Collabs
+    - Revenue-sharing Invite Form
+    - Featured Partner Tools
+
+  - /about
+    - Mission, Team, Vision
+    - Story of Gagsty
+    - Revenue & Growth Focus
+
+  - /help or /faq
+    - Chips vs Token
+    - Under-18 Rules
+    - Telegram Game Setup
+    - Game Approval Process
+    - Safety + Fair Play
+
+  - /community
+    - Telegram Channels
+    - Discord
+    - YouTube Tutorials
+    - Twitter Feed Embed
+
+  - /auth
+    - Login: Telegram / Google
+    - Age Verification
+    - Role Assignment on Login
+```
+
+---
+
+Would you like this converted into:
+
+* ✅ **JSON sitemap**
+* ✅ **Replit prompt-ready format**
+* ✅ **React JSX layout scaffold**
+* ✅ **Admin + DB schema (Supabase)**
+
+Let me know your next move and I’ll build it accordingly.
