@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  
+  /* Gagsty Colors */
+  --primary: 267 50% 37%;  /* #5D2E8C - Neon Purple */
+  --primary-foreground: 0 0% 100%;  /* #FFFFFF - White text */
+  
+  --secondary: 144 55% 40%;  /* #2D9B4F - Futuristic Green */
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 187 100% 50%;  /* #00E0FF - Neon Cyan */
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 84% 60%;  /* #FF4B4B - Alert Red */
+  --destructive-foreground: 0 0% 100%;
+  
+  --telegram: 201 75% 53%;  /* #229ED9 - Telegram Blue */
+  --warning: 42 100% 63%;   /* #FFCF44 - Alert Yellow */
+  --highlight: 18 100% 67%;  /* #FF8855 - Holo Orange */
+  
+  --darkBase: 0 0% 7%;  /* #121212 - Deep Gray-Black */
+  --lightBase: 0 0% 100%;  /* #FFFFFF - Soft White */
+  
+  --ring: 240 4.9% 83.9%;
+  --radius: 0.5rem;
+}
+
+/* Dark theme is default for this app */
+.dark {
+  --background: 0 0% 7%;
+  --foreground: 0 0% 100%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --popover: 0 0% 7%;
+  --popover-foreground: 0 0% 100%;
+  --card: 0 0% 7%;
+  --card-foreground: 0 0% 100%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-darkBase text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins;
+  }
+}
+
+@layer components {
+  .gradient-card {
+    @apply bg-gradient-to-b from-[#1A1A1A] to-darkBase;
+  }
+  
+  .primary-glow:hover {
+    @apply shadow-[0_0_15px_rgba(93,46,140,0.7)] transition-shadow duration-300;
+  }
+  
+  .accent-glow:hover {
+    @apply shadow-[0_0_15px_rgba(0,224,255,0.7)] transition-shadow duration-300;
+  }
+  
+  .telegram-glow:hover {
+    @apply shadow-[0_0_15px_rgba(34,158,217,0.7)] transition-shadow duration-300;
+  }
+
+  .hero-pattern {
+    background: radial-gradient(circle at 50% 50%, rgba(93, 46, 140, 0.15), rgba(0, 0, 0, 0) 70%);
+  }
+
+  .animate-float {
+    animation: float 3s infinite ease-in-out;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(93, 46, 140, 0.7); }
+    50% { box-shadow: 0 0 20px rgba(93, 46, 140, 0.9); }
+  }
+}
