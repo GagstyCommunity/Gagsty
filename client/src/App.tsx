@@ -14,6 +14,7 @@ import GameView from "@/pages/GameView";
 import Dashboard from "@/pages/Dashboard";
 import AdminDashboard from "@/pages/AdminDashboard";
 import Search from "@/pages/Search";
+import LearnHub from "@/pages/LearnHub";
 import Earn from "@/pages/Earn";
 import Token from "@/pages/Token";
 import TelegramIntegration from "@/pages/TelegramIntegration";
@@ -32,7 +33,10 @@ function Router() {
           <Route path="/admin" component={AdminDashboard} />
           <Route path="/search" component={Search} />
           <Route path="/earn" component={Earn} />
-          <Route path="/learn-hub" component={NotFound} />
+          <Route path="/learn-hub" component={LearnHub} />
+          <Route path="/learn-hub/article/:id" component={LearnHub} />
+          <Route path="/learn-hub/interview/:id" component={LearnHub} />
+          <Route path="/learn-hub/tech/:id" component={LearnHub} />
           <Route path="/chips" component={Token} />
           <Route path="/token" component={Token} />
           <Route path="/jobs" component={NotFound} />
