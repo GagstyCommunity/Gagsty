@@ -34,16 +34,33 @@ const GameView = () => {
   });
   
   // Fallback to sample game if API fails or while loading
-  const displayGame: Game = game || SAMPLE_GAMES.find(g => g.id.toString() === id) || SAMPLE_GAMES[0];
+  const fallbackGame = SAMPLE_GAMES.find(g => g.id.toString() === id) || SAMPLE_GAMES[0];
+  const displayGame = game || {
+    ...fallbackGame,
+    id: fallbackGame.id,
+    creatorId: 1,
+    title: fallbackGame.title,
+    prompt: "",
+    description: fallbackGame.description,
+    gameType: fallbackGame.gameType,
+    monetization: ["in-game-chips"],
+    thumbnail: fallbackGame.thumbnail,
+    status: "approved",
+    telegramMiniAppData: null,
+    webGameUrl: null,
+    chipsEarned: fallbackGame.chipsEarned,
+    createdAt: fallbackGame.createdAt,
+    creator: fallbackGame.creator
+  } as Game;
   
   // For demo purposes - chip counter animation
-  const [chipCount, setChipCount] = useState(displayGame.chipsEarned);
+  const [chipCount, setChipCount] = useState(displayGame.chipsEarned || 0);
   
   useEffect(() => {
     const interval = setInterval(() => {
       // Randomly increment the counter occasionally
       if (Math.random() > 0.7) {
-        setChipCount(prev => prev + Math.floor(Math.random() * 5) + 1);
+        setChipCount((prev: number) => prev + Math.floor(Math.random() * 5) + 1);
       }
     }, 3000);
     
@@ -73,8 +90,8 @@ const GameView = () => {
   return (
     <>
       <Helmet>
-        <title>{displayGame.title} - Gagsty</title>
-        <meta name="description" content={displayGame.description} />
+        <title>{displayGame.title || 'Game'} - Gagsty</title>
+        <meta name="description" content={displayGame.description || 'Play this exciting game on Gagsty platform'} />
       </Helmet>
       
       <section className="py-12 bg-gradient-to-b from-darkBase to-black">
@@ -84,8 +101,8 @@ const GameView = () => {
             {/* Game Thumbnail */}
             <div className="relative rounded-xl overflow-hidden gradient-card border border-gray-800">
               <img 
-                src={displayGame.thumbnail} 
-                alt={`${displayGame.title} thumbnail`} 
+                src={displayGame.thumbnail || "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=60"} 
+                alt={`${displayGame.title || "Game"} thumbnail`} 
                 className="w-full h-64 object-cover"
               />
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-darkBase to-transparent"></div>
@@ -221,7 +238,7 @@ const GameView = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
                       <div className="overflow-hidden rounded-lg border border-gray-800 h-24">
                         <img 
-                          src={displayGame.thumbnail}
+                          src={displayGame.thumbnail || "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=60"}
                           alt="Game visual 1"
                           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                         />
