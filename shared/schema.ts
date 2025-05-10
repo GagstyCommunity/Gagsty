@@ -25,6 +25,7 @@ export const games = pgTable("games", {
   creatorId: integer("creator_id").notNull(),
   title: text("title").notNull(),
   prompt: text("prompt").notNull(),
+  description: text("description"), // Added for storing game description
   gameType: text("game_type").notNull(), // miniApp, webGame, mobile
   monetization: text("monetization").array(), // inGameChips, ads, referral, upgrade
   thumbnail: text("thumbnail"),
@@ -33,6 +34,7 @@ export const games = pgTable("games", {
   webGameUrl: text("web_game_url"),
   chipsEarned: integer("chips_earned").default(0),
   createdAt: timestamp("created_at").defaultNow(),
+  creator: text("creator"), // Creator name for display purpose
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -52,9 +54,11 @@ export const insertGameSchema = createInsertSchema(games).pick({
   creatorId: true,
   title: true,
   prompt: true,
+  description: true,
   gameType: true,
   monetization: true,
   thumbnail: true,
+  creator: true,
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -70,8 +74,11 @@ export type Game = typeof games.$inferSelect;
 export const createGameSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters long"),
   prompt: z.string().min(10, "Prompt must be at least 10 characters").max(1000, "Prompt must be less than 1000 characters"),
+  description: z.string().optional(),
   gameType: z.enum(["mini-app", "web-game", "mobile"]),
   monetization: z.array(z.enum(["in-game-chips", "ads", "referral", "upgrade"])).min(1, "Select at least one monetization option"),
+  thumbnail: z.string().optional(),
+  creator: z.string().optional(),
 });
 
 export type CreateGameFormData = z.infer<typeof createGameSchema>;

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SAMPLE_GAMES } from "@/config/gameTypes";
+import { type Game } from "@shared/schema";
 import { 
   FaBrain, 
   FaTelegram, 
@@ -28,12 +29,12 @@ const GameView = () => {
   const [activeTab, setActiveTab] = useState("overview");
   
   // Fetch game data
-  const { data: game, isLoading, error } = useQuery({
+  const { data: game, isLoading, error } = useQuery<Game>({
     queryKey: [`/api/games/${id}`],
   });
   
   // Fallback to sample game if API fails or while loading
-  const displayGame = game || SAMPLE_GAMES.find(g => g.id.toString() === id) || SAMPLE_GAMES[0];
+  const displayGame: Game = game || SAMPLE_GAMES.find(g => g.id.toString() === id) || SAMPLE_GAMES[0];
   
   // For demo purposes - chip counter animation
   const [chipCount, setChipCount] = useState(displayGame.chipsEarned);
