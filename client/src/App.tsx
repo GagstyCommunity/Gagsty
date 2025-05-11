@@ -1,22 +1,23 @@
+
 import React from 'react';
 import { Route, Switch } from "wouter";
-import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import StickyCreateGameCTA from "@/components/StickyCreateGameCTA";
-import Home from "@/pages/Home";
-import CreateGame from "@/pages/CreateGame";
-import Games from "@/pages/Games";
-import GameView from "@/pages/GameView";
-import Dashboard from "@/pages/Dashboard";
-import Earn from "@/pages/Earn";
-import Token from "@/pages/Token";
-import TelegramIntegration from "@/pages/TelegramIntegration";
-import LearnHub from "@/pages/LearnHub";
-import Search from "@/pages/Search";
-import NotFound from "@/pages/not-found";
+import { Toaster } from "./components/ui/toaster";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import StickyCreateGameCTA from "./components/StickyCreateGameCTA";
+import Home from "./pages/Home";
+import CreateGame from "./pages/CreateGame";
+import Games from "./pages/Games";
+import GameView from "./pages/GameView";
+import Dashboard from "./pages/Dashboard";
+import Earn from "./pages/Earn";
+import Token from "./pages/Token";
+import TelegramIntegration from "./pages/TelegramIntegration";
+import LearnHub from "./pages/LearnHub";
+import Search from "./pages/Search";
+import NotFound from "./pages/not-found";
 
-const App = () => {
+function App() {
   return (
     <>
       <Navbar />
@@ -40,6 +41,6 @@ const App = () => {
       <Toaster />
     </>
   );
-};
+}
 
 export default App;
