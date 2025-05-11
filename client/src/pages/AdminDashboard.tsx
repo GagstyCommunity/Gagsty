@@ -20,19 +20,25 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { type Game, type User } from "@shared/schema";
+import { queryClient } from "@/lib/react-query";
 
 export default function AdminDashboard() {
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState("pending-games");
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [isGameDialogOpen, setIsGameDialogOpen] = useState(false);
-  
+
   // Check if user is admin (this would typically be done via a proper authorization check)
   const [isAdmin, setIsAdmin] = useState(true); // For demo purposes, always true
-  
+
   // Fetch pending games
   const { data: pendingGames, isLoading: isLoadingPending } = useQuery<Game[]>({
     queryKey: ["/api/games", { status: "pending" }],
+    queryFn: async () => {
+      const response = await fetch(`/api/games?status=pending`);
+      if (!response.ok) throw new Error('Failed to fetch games');
+      return response.json();
+    }
   });
 
   // Fetch all users
@@ -50,6 +56,26 @@ export default function AdminDashboard() {
     return null;
   }
 
+  const approveGame = async (gameId: string) => {
+    try {
+      await fetch(`/api/games/${gameId}/approve`, { method: 'POST' });
+      // Refetch pending games
+      queryClient.invalidateQueries(['/api/games']);
+    } catch (error) {
+      console.error('Error approving game:', error);
+    }
+  };
+
+  const rejectGame = async (gameId: string) => {
+    try {
+      await fetch(`/api/games/${gameId}/reject`, { method: 'POST' });
+      // Refetch pending games
+      queryClient.invalidateQueries(['/api/games']);
+    } catch (error) {
+      console.error('Error rejecting game:', error);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -65,7 +91,7 @@ export default function AdminDashboard() {
               <Badge className="bg-red-500 text-white">Admin Only</Badge>
               <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
               <Card className="bg-gray-800 border-gray-700">
                 <CardContent className="p-4">
@@ -80,7 +106,7 @@ export default function AdminDashboard() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-gray-800 border-gray-700">
                 <CardContent className="p-4">
                   <div className="flex items-center">
@@ -94,7 +120,7 @@ export default function AdminDashboard() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-gray-800 border-gray-700">
                 <CardContent className="p-4">
                   <div className="flex items-center">
@@ -108,7 +134,7 @@ export default function AdminDashboard() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-gray-800 border-gray-700">
                 <CardContent className="p-4">
                   <div className="flex items-center">
@@ -160,7 +186,7 @@ export default function AdminDashboard() {
             {/* Pending Games Tab */}
             <TabsContent value="pending-games" className="space-y-6">
               <h2 className="text-2xl font-bold text-white">Pending Game Approvals</h2>
-              
+
               {pendingGames && pendingGames.length > 0 ? (
                 <div className="space-y-4">
                   {pendingGames.map((game) => (
@@ -174,7 +200,7 @@ export default function AdminDashboard() {
                               className="w-full h-full object-cover"
                             />
                           </div>
-                          
+
                           <div className="flex-1">
                             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-2">
                               <h3 className="text-lg font-bold text-white">{game.title}</h3>
@@ -187,11 +213,11 @@ export default function AdminDashboard() {
                                 </Badge>
                               </div>
                             </div>
-                            
+
                             <p className="text-gray-400 text-sm mb-3 line-clamp-2">
                               {game.description || game.prompt || "No description provided."}
                             </p>
-                            
+
                             <div className="flex flex-wrap justify-end mt-4 space-x-2">
                               <Button 
                                 size="sm" 
@@ -207,6 +233,7 @@ export default function AdminDashboard() {
                               <Button 
                                 size="sm" 
                                 className="bg-green-600 hover:bg-green-700 text-white text-xs"
+                                onClick={() => approveGame(game.id)}
                               >
                                 <FaCheckCircle className="mr-1" />
                                 Approve
@@ -214,6 +241,7 @@ export default function AdminDashboard() {
                               <Button 
                                 size="sm" 
                                 className="bg-red-600 hover:bg-red-700 text-white text-xs"
+                                onClick={() => rejectGame(game.id)}
                               >
                                 <FaTimesCircle className="mr-1" />
                                 Reject
@@ -234,7 +262,7 @@ export default function AdminDashboard() {
                   </p>
                 </div>
               )}
-              
+
               {/* Game Review Dialog */}
               <Dialog open={isGameDialogOpen} onOpenChange={setIsGameDialogOpen}>
                 <DialogContent className="bg-gray-900 text-white border-gray-700 max-w-4xl">
@@ -243,7 +271,7 @@ export default function AdminDashboard() {
                       Review Game: {selectedGame?.title}
                     </DialogTitle>
                   </DialogHeader>
-                  
+
                   {selectedGame && (
                     <div className="space-y-4 mt-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -255,7 +283,7 @@ export default function AdminDashboard() {
                               className="w-full h-48 object-cover"
                             />
                           </div>
-                          
+
                           <div className="space-y-2">
                             <div>
                               <span className="text-gray-400 text-sm">Game Type:</span>
@@ -281,7 +309,7 @@ export default function AdminDashboard() {
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="space-y-4">
                           <div>
                             <h3 className="text-white font-medium mb-2">Original Prompt</h3>
@@ -289,14 +317,14 @@ export default function AdminDashboard() {
                               {selectedGame.prompt}
                             </div>
                           </div>
-                          
+
                           <div>
                             <h3 className="text-white font-medium mb-2">Description</h3>
                             <div className="p-3 bg-gray-800 rounded-lg text-gray-300 text-sm">
                               {selectedGame.description || "No description provided."}
                             </div>
                           </div>
-                          
+
                           {selectedGame.telegramMiniAppData && (
                             <div>
                               <h3 className="text-white font-medium mb-2">Telegram Mini App Data</h3>
@@ -312,7 +340,7 @@ export default function AdminDashboard() {
                           )}
                         </div>
                       </div>
-                      
+
                       <div className="flex justify-end space-x-3 mt-6">
                         <Button 
                           variant="outline" 
@@ -322,12 +350,20 @@ export default function AdminDashboard() {
                         </Button>
                         <Button 
                           className="bg-green-600 hover:bg-green-700 text-white"
+                          onClick={() => {
+                            approveGame(selectedGame.id);
+                            setIsGameDialogOpen(false);
+                          }}
                         >
                           <FaCheckCircle className="mr-2" />
                           Approve Game
                         </Button>
                         <Button 
                           className="bg-red-600 hover:bg-red-700 text-white"
+                          onClick={() => {
+                            rejectGame(selectedGame.id);
+                            setIsGameDialogOpen(false);
+                          }}
                         >
                           <FaTimesCircle className="mr-2" />
                           Reject Game
@@ -342,12 +378,12 @@ export default function AdminDashboard() {
             {/* Moderation Tab */}
             <TabsContent value="moderation" className="space-y-6">
               <h2 className="text-2xl font-bold text-white">Community Moderation</h2>
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card className="bg-gray-800 border-gray-700">
                   <CardContent className="p-4">
                     <h3 className="text-lg font-medium text-white mb-4">Reported Content</h3>
-                    
+
                     <div className="space-y-3">
                       {Array.from({ length: 3 }).map((_, index) => (
                         <div key={index} className="p-3 bg-gray-700/50 rounded-lg">
@@ -380,11 +416,11 @@ export default function AdminDashboard() {
                     </div>
                   </CardContent>
                 </Card>
-                
+
                 <Card className="bg-gray-800 border-gray-700">
                   <CardContent className="p-4">
                     <h3 className="text-lg font-medium text-white mb-4">User Management</h3>
-                    
+
                     <div className="space-y-3">
                       {Array.from({ length: 4 }).map((_, index) => (
                         <div key={index} className="p-3 bg-gray-700/50 rounded-lg flex justify-between items-center">
@@ -419,12 +455,12 @@ export default function AdminDashboard() {
             {/* Chip Management Tab */}
             <TabsContent value="chips" className="space-y-6">
               <h2 className="text-2xl font-bold text-white">Chip & Badge Management</h2>
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <Card className="bg-gray-800 border-gray-700">
                   <CardContent className="p-4">
                     <h3 className="text-lg font-medium text-white mb-3">Chip Economy Overview</h3>
-                    
+
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
                         <span className="text-gray-400">Total Chips Issued</span>
@@ -443,17 +479,17 @@ export default function AdminDashboard() {
                         <span className="text-[#FFCF44] font-bold">384</span>
                       </div>
                     </div>
-                    
+
                     <Button className="w-full mt-4" variant="outline">
                       Generate Detailed Report
                     </Button>
                   </CardContent>
                 </Card>
-                
+
                 <Card className="bg-gray-800 border-gray-700">
                   <CardContent className="p-4">
                     <h3 className="text-lg font-medium text-white mb-3">Issue Chips</h3>
-                    
+
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <label className="text-sm text-gray-400">Recipient User ID</label>
@@ -463,7 +499,7 @@ export default function AdminDashboard() {
                           placeholder="Enter user ID"
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
                         <label className="text-sm text-gray-400">Chips Amount</label>
                         <input 
@@ -472,7 +508,7 @@ export default function AdminDashboard() {
                           placeholder="Enter amount"
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
                         <label className="text-sm text-gray-400">Reason</label>
                         <select className="w-full p-2 rounded border border-gray-700 bg-gray-900 text-white">
@@ -483,18 +519,18 @@ export default function AdminDashboard() {
                           <option>Other</option>
                         </select>
                       </div>
-                      
+
                       <Button className="w-full bg-primary">
                         Issue Chips
                       </Button>
                     </div>
                   </CardContent>
                 </Card>
-                
+
                 <Card className="bg-gray-800 border-gray-700">
                   <CardContent className="p-4">
                     <h3 className="text-lg font-medium text-white mb-3">Badge Management</h3>
-                    
+
                     <div className="space-y-3">
                       {["Beginner", "Game Tester", "Game Developer", "Growth Hacker", "Community Moderator"].map((badge, index) => (
                         <div key={index} className="flex justify-between items-center">
@@ -521,7 +557,7 @@ export default function AdminDashboard() {
                           </Button>
                         </div>
                       ))}
-                      
+
                       <Button className="w-full mt-2" variant="outline">
                         Create New Badge
                       </Button>
@@ -529,11 +565,11 @@ export default function AdminDashboard() {
                   </CardContent>
                 </Card>
               </div>
-              
+
               <Card className="bg-gray-800 border-gray-700">
                 <CardContent className="p-4">
                   <h3 className="text-lg font-medium text-white mb-3">Recent Chip Transactions</h3>
-                  
+
                   <div className="overflow-x-auto">
                     <table className="w-full text-left">
                       <thead className="bg-gray-900">
@@ -591,7 +627,7 @@ export default function AdminDashboard() {
                 <h2 className="text-2xl font-bold text-white">Prompt Competitions</h2>
                 <Button className="bg-primary text-white">Create New Competition</Button>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {Array.from({ length: 3 }).map((_, index) => (
                   <Card key={index} className={`bg-gray-800 border-gray-700 ${
@@ -616,13 +652,13 @@ export default function AdminDashboard() {
                            "Upcoming"}
                         </Badge>
                       </div>
-                      
+
                       <p className="text-gray-400 text-sm my-3">
                         {index === 0 ? "Create a cyberpunk-themed game with futuristic elements and dystopian storyline." : 
                          index === 1 ? "Design a fantasy RPG with unique character classes and magic system." : 
                          "Develop educational games that teach coding concepts to beginners."}
                       </p>
-                      
+
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
                           <span className="text-gray-400">Submissions</span>
@@ -630,13 +666,13 @@ export default function AdminDashboard() {
                         </div>
                         <Progress value={(10 + index * 8) * 2} className="h-1" />
                       </div>
-                      
+
                       <div className="flex items-center justify-between mt-4">
                         <div>
                           <div className="text-xs text-gray-400">Prize Pool</div>
                           <div className="text-[#FFCF44] font-bold">{5000 - index * 1000} Chips</div>
                         </div>
-                        
+
                         <div>
                           <div className="text-xs text-gray-400">Ends In</div>
                           <div className="text-white">
@@ -646,7 +682,7 @@ export default function AdminDashboard() {
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="flex justify-end mt-4 space-x-2">
                         <Button variant="outline" size="sm" className="text-xs">View Details</Button>
                         <Button className="bg-primary text-white text-xs" size="sm">Manage</Button>
@@ -663,7 +699,7 @@ export default function AdminDashboard() {
                 <h2 className="text-2xl font-bold text-white">Partner & Investor Management</h2>
                 <Button className="bg-primary text-white">Add New Partner</Button>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {Array.from({ length: 3 }).map((_, index) => (
                   <Card key={index} className="bg-gray-800 border-gray-700">
@@ -682,20 +718,21 @@ export default function AdminDashboard() {
                            "Marketing Partner"}
                         </Badge>
                       </div>
-                      
+
                       <h3 className="text-lg font-medium text-white mb-1">
                         {index === 0 ? "TechCorp Solutions" : 
                          index === 1 ? "Venture Capital Fund" : 
                          "Digital Marketing Agency"}
                       </h3>
-                      
+
                       <p className="text-sm text-gray-400 mb-3">
                         {index === 0 ? "API integration and development support" : 
                          index === 1 ? "Series A investor with gaming focus" : 
                          "Cross-promotion and user acquisition partner"}
                       </p>
-                      
+
                       <div className="space-y-2 text-xs">
+                        ```
                         <div className="flex justify-between">
                           <span className="text-gray-400">Partnership Start</span>
                           <span className="text-white">
@@ -715,7 +752,7 @@ export default function AdminDashboard() {
                           <span className="text-green-400">Active</span>
                         </div>
                       </div>
-                      
+
                       <div className="flex justify-end mt-4 space-x-2">
                         <Button variant="outline" size="sm" className="text-xs">View Details</Button>
                         <Button variant="outline" size="sm" className="text-xs">Edit</Button>
@@ -724,11 +761,11 @@ export default function AdminDashboard() {
                   </Card>
                 ))}
               </div>
-              
+
               <Card className="bg-gray-800 border-gray-700">
                 <CardContent className="p-4">
                   <h3 className="text-lg font-medium text-white mb-3">Partnership Requests</h3>
-                  
+
                   <div className="divide-y divide-gray-700">
                     {Array.from({ length: 3 }).map((_, index) => (
                       <div key={index} className="py-3 flex justify-between items-center">

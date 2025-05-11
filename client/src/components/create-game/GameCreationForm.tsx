@@ -11,18 +11,18 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { GAME_TYPES, MONETIZATION_OPTIONS } from "@/config/gameTypes";
 import { FaMagic, FaQuestionCircle, FaUpload, FaTelegram } from "react-icons/fa";
+import { FaGamepad, FaCoins, FaAd, FaUsers, FaArrowUp } from "react-icons/fa";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const GameCreationForm = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<CreateGameFormData>();
   const [, navigate] = useLocation();
   const { toast } = useToast();
   const [wordCount, setWordCount] = useState(0);
-  
+
   const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-    reset
+    watch
   } = useForm<CreateGameFormData>({
     resolver: zodResolver(createGameSchema),
     defaultValues: {
@@ -32,9 +32,9 @@ const GameCreationForm = () => {
       monetization: ["in-game-chips"]
     }
   });
-  
+
   const watchPrompt = watch("prompt");
-  
+
   // Update word count on prompt change
   useState(() => {
     if (watchPrompt) {
@@ -44,7 +44,7 @@ const GameCreationForm = () => {
       setWordCount(0);
     }
   });
-  
+
   // Create game mutation
   const createGameMutation = useMutation({
     mutationFn: async (data: CreateGameFormData) => {
@@ -54,15 +54,13 @@ const GameCreationForm = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['/api/games'] });
       queryClient.invalidateQueries({ queryKey: ['/api/games/featured'] });
-      
+
       toast({
         title: "Game created successfully!",
         description: "Your game is now being processed and will be available soon.",
         variant: "default",
       });
-      
-      reset();
-      navigate(`/game/${data.id}`);
+
     },
     onError: (error) => {
       toast({
@@ -72,11 +70,11 @@ const GameCreationForm = () => {
       });
     }
   });
-  
+
   const onSubmit = (data: CreateGameFormData) => {
     createGameMutation.mutate(data);
   };
-  
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
@@ -91,7 +89,7 @@ const GameCreationForm = () => {
           <p className="mt-1 text-sm text-destructive">{errors.title.message}</p>
         )}
       </div>
-      
+
       <div>
         <label htmlFor="prompt" className="block text-sm font-medium text-gray-300 mb-2">Game Prompt (Idea)</label>
         <Textarea
@@ -115,7 +113,7 @@ const GameCreationForm = () => {
           <p className="mt-1 text-sm text-destructive">{errors.prompt.message}</p>
         )}
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-3">Game Type</label>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -144,7 +142,7 @@ const GameCreationForm = () => {
           <p className="mt-1 text-sm text-destructive">{errors.gameType.message}</p>
         )}
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-3">Monetization</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -171,7 +169,7 @@ const GameCreationForm = () => {
           <p className="mt-1 text-sm text-destructive">{errors.monetization.message}</p>
         )}
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">Upload Assets (Optional)</label>
         <div className="border-2 border-dashed border-gray-700 rounded-lg p-6 text-center">
@@ -189,7 +187,7 @@ const GameCreationForm = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-center gap-4">
         <Button 
           type="submit"
