@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button"
-import { useNavigate } from "react-router-dom"
+import { useLocation } from "wouter"
 import { motion } from "framer-motion"
 
 export const Hero = () => {
-  const navigate = useNavigate()
+  const [, navigate] = useLocation()
 
   const stats = [
     { label: "Games Built", value: "1,234+" },
