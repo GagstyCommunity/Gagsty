@@ -733,6 +733,7 @@ export default function AdminDashboard() {
 
                       <div className="space-y-2 text-xs">
                         ```
+```python
                         <div className="flex justify-between">
                           <span className="text-gray-400">Partnership Start</span>
                           <span className="text-white">

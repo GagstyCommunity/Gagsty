@@ -59,7 +59,22 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router />
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/create-game" component={CreateGame} />
+          <Route path="/games" component={Games} />
+          <Route path="/game/:id" component={GameView} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/admin" component={AdminDashboard} />
+          <Route path="/search" component={Search} />
+          <Route path="/learn" component={LearnHub} />
+          <Route path="/earn" component={Earn} />
+          <Route path="/token" component={Token} />
+          <Route path="/telegram-integration" component={TelegramIntegration} />
+          <Route component={NotFound} />
+        </Switch>
+        <StickyCreateGameCTA />
+        <Footer />
       </TooltipProvider>
     </QueryClientProvider>
   );
