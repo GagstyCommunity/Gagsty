@@ -4,44 +4,154 @@ import { storage } from "./storage";
 import { createGameSchema, insertGameSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  const server = createServer(app);
+
+  // Get all users
+  app.get('/api/users', async (req: Request, res: Response) => {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*');
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.json(data);
+  });
+
+  // Get all games with filter options
+  app.get('/api/games', async (req: Request, res: Response) => {
+    const { status } = req.query;
+
+    let query = supabase.from('games').select('*');
+
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.json(data);
+  });
+
+  // Get game by ID
+  app.get('/api/games/:id', async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const { data, error } = await supabase
+      .from('games')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      return res.status(404).json({ error: 'Game not found' });
+    }
+
+    return res.json(data);
+  });
+
+  // Approve game
+  app.post('/api/games/:id/approve', async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const { data, error } = await supabase
+      .from('games')
+      .update({ status: 'approved' })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.json(data[0]);
+  });
+
+  // Reject game
+  app.post('/api/games/:id/reject', async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const { data, error } = await supabase
+      .from('games')
+      .update({ status: 'rejected' })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.json(data[0]);
+  });
+
+  // Get all badges
+  app.get('/api/badges', async (req: Request, res: Response) => {
+    const { data, error } = await supabase
+      .from('badges')
+      .select('*');
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.json(data);
+  });
+
+  // Admin routes
+  app.get('/api/admin/users', async (req: Request, res: Response) => {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*');
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.json(data);
+  });
   // API Routes
   const apiRouter = express.Router();
-  
+
   // Games endpoints
   apiRouter.get('/games', getGames);
   apiRouter.get('/games/featured', getFeaturedGames);
   apiRouter.get('/games/:id', getGame);
   apiRouter.post('/games', createGame);
-  
+
   // Users endpoints
   apiRouter.get('/users/:id', getUser);
   apiRouter.get('/users/:id/badges', getUserBadges);
-  
+
   // Use apiRouter
   app.use('/api', apiRouter);
-  
+
   const httpServer = createServer(app);
   return httpServer;
-  
+
   // Handler functions
-  
+
   // Get all games with optional filters
   async function getGames(req: Request, res: Response) {
     try {
       const { status, gameType, creatorId } = req.query;
       const filter: any = {};
-      
+
       if (status) filter.status = status as string;
       if (gameType) filter.gameType = gameType as string;
       if (creatorId) filter.creatorId = parseInt(creatorId as string);
-      
+
       const games = await storage.getGames(filter);
       res.json(games);
     } catch (error) {
       res.status(500).json({ message: "Error fetching games" });
     }
   }
-  
+
   // Get featured games 
   async function getFeaturedGames(req: Request, res: Response) {
     try {
@@ -52,23 +162,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Error fetching featured games" });
     }
   }
-  
+
   // Get single game
   async function getGame(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
       const game = await storage.getGame(id);
-      
+
       if (!game) {
         return res.status(404).json({ message: "Game not found" });
       }
-      
+
       res.json(game);
     } catch (error) {
       res.status(500).json({ message: "Error fetching game" });
     }
   }
-  
+
   // Create a new game
   async function createGame(req: Request, res: Response) {
     try {
@@ -80,11 +190,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           errors: validationResult.error.errors 
         });
       }
-      
+
       // Normally we'd get this from the authenticated user
       // For demo purposes, we're using a hardcoded creatorId
       const creatorId = req.body.creatorId || 1;
-      
+
       // Transform the validated data to match our schema
       const gameData = {
         creatorId,
@@ -99,7 +209,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ),
         thumbnail: `${req.body.title.toLowerCase().replace(/\s+/g, '-')}-thumbnail.jpg`,
       };
-      
+
       // Validate against the insertGameSchema
       const insertValidation = insertGameSchema.safeParse(gameData);
       if (!insertValidation.success) {
@@ -108,30 +218,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
           errors: insertValidation.error.errors 
         });
       }
-      
+
       // Create the game
       const newGame = await storage.createGame(gameData);
-      
+
       // For demo purposes, we automatically approve the game
       // In a real system, this would go through moderation
       await storage.updateGameStatus(newGame.id, 'approved');
-      
+
       res.status(201).json(newGame);
     } catch (error) {
       res.status(500).json({ message: "Error creating game" });
     }
   }
-  
+
   // Get user by id
   async function getUser(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
       const user = await storage.getUser(id);
-      
+
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-      
+
       // Don't send the password
       const { password, ...userWithoutPassword } = user;
       res.json(userWithoutPassword);
@@ -139,17 +249,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Error fetching user" });
     }
   }
-  
+
   // Get user badges
   async function getUserBadges(req: Request, res: Response) {
     try {
       const userId = parseInt(req.params.id);
       const user = await storage.getUser(userId);
-      
+
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-      
+
       const badges = await storage.getBadges(userId);
       res.json(badges);
     } catch (error) {
