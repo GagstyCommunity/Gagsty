@@ -25,7 +25,7 @@ const HowItWorks = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Step 1 */}
-          <div className="gradient-card rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all primary-glow">
+          <div className="gradient-card rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all primary-glow card-hover glass-effect">
             <div className="w-12 h-12 flex items-center justify-center bg-primary/20 rounded-full mb-6">
               <span className="text-xl font-bold font-poppins text-primary">1</span>
             </div>
