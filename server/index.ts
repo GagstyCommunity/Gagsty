@@ -4,6 +4,22 @@ import { setupVite, serveStatic, log } from "./vite";
 import { seedDatabase } from "./seed";
 import { supabase } from "./db";
 
+// Add database connection check
+async function checkDbConnection() {
+  try {
+    const { data, error } = await supabase.from('users').select('*', { count: 'exact', head: true });
+    if (error) {
+      console.error('⚠️ Database connection error:', error.message);
+      return false;
+    }
+    console.log('✅ Connected to Supabase database successfully');
+    return true;
+  } catch (err) {
+    console.error('⚠️ Failed to connect to database:', err);
+    return false;
+  }
+}
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
