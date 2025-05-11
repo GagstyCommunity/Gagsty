@@ -34,7 +34,7 @@ const Navbar = () => {
     { name: "Gagsty Chips", path: "/chips", icon: <FaCoins className="mr-2" /> },
     { name: "Gagsty Token", path: "/token", icon: <FaChartLine className="mr-2" /> },
   ];
-  
+
   const secondaryLinks = [
     { name: "Jobs & Gigs", path: "/jobs", icon: <FaBriefcase className="mr-2" /> },
     { name: "Partners", path: "/partners", icon: <FaHandshake className="mr-2" /> },
@@ -127,7 +127,7 @@ const Navbar = () => {
                         <div className="text-primary font-poppins font-bold text-2xl">GAGSTY</div>
                       </Link>
                     </div>
-                    
+
                     <div className="flex-1 overflow-auto py-6 px-4">
                       <div className="space-y-1">
                         {/* Primary Navigation Links */}
@@ -145,7 +145,7 @@ const Navbar = () => {
                             </Link>
                           ))}
                         </div>
-                        
+
                         {/* Secondary Navigation Links */}
                         <div>
                           <h3 className="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">More</h3>
@@ -163,7 +163,7 @@ const Navbar = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="p-6 border-t border-gray-800 space-y-4">
                       <Button 
                         className="w-full bg-primary hover:bg-primary/90 text-white"
@@ -175,7 +175,7 @@ const Navbar = () => {
                         <FaGamepad className="mr-2" />
                         Create Game
                       </Button>
-                      
+
                       <Button 
                         variant="outline"
                         className="w-full border-gray-700 hover:bg-gray-800"
