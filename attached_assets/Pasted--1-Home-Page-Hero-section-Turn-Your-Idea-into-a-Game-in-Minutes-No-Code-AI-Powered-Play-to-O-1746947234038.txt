@@ -1,0 +1,167 @@
+🏠 1. Home Page
+Hero section: “Turn Your Idea into a Game in Minutes. No Code. AI Powered. Play-to-Own.”
+
+CTA buttons: Create Game Now, Earn Gagsty Chips, Join Community
+
+Animated slider of how the platform works
+
+Live stats: total games built, creators rewarded, Chips earned
+
+Featured games section
+
+🧠 2. How It Works Page
+Step-by-step flow:
+
+Submit prompt
+
+AI builds game logic
+
+Auto deploys to Web + Telegram Mini App
+
+Share & Earn
+
+Supported game types: Telegram Mini Apps, 2D Web, 3D Godot
+
+🕹️ 3. Create Game Page
+Game title
+
+150-word prompt input
+
+Upload assets (optional)
+
+Choose game type (Mini App / Web / Mobile)
+
+Select monetization model (Chips, Ads, Upgrades)
+
+Only users staking $1000 or equivalent Chips can build full games (except under-18s)
+
+🎮 4. Game Directory Page
+Game Cards with filters: AI-made, Trending, Beta Test, Earnable
+
+Each card has thumbnail, creator, play buttons (Web & Telegram), live chips earned
+
+🕹️ 5. Game View Page (/game/slug)
+Show game name, genre, creator
+
+Play now (Web & Telegram)
+
+Chips earned counter
+
+Description, storyline, mechanics
+
+Community comments
+
+📲 Telegram Integration (only visible to game creator)
+JSON config for Mini App
+
+Auto-generate startParam with /start=gameId-userId-affiliateCode
+
+Embed guide for Telegram button linking
+
+💡 Viral Growth & Affiliate Tools
+Star Prompt link with referral (?ref=username)
+
+Earn 10% of Chips if someone builds from your prompt
+
+Invite 3 friends = 2x boost
+
+Daily spin, leaderboard, lootboxes, game challenges
+
+Tips to go viral (e.g., TikTok, Telegram channels, WhatsApp reward links)
+
+🧠 Game Gamenomics
+Max earnable Chips: depends on difficulty
+
+Earn by: Playing, Referring, Uploading assets
+
+Spend Chips on: Boosts (2x, 3x, 10x), Skins, Lootboxes
+
+Split: 60% creator, 10% referrer, 30% platform
+
+💰 Gagsty Chips System
+Total supply: 100 Billion
+
+Not crypto, cannot be bought
+
+Earned only via tasks (gameplay, moderation, referral, gigs)
+
+Used for upgrades, game creation, boosts
+
+🪙 GAGSTY Token (ERC20 or TON)
+Total supply: 1 Billion
+
+Tradable crypto token used to unlock premium features
+
+Users can convert earned Chips to Token (admin controlled)
+
+Pegged to in-game utilities and monetization
+
+📊 Tokenomics Table
+Category	% Allocation
+Community & Players	40%
+Team & Ops	20%
+Ecosystem	15%
+Advisors	5%
+Reserve	10%
+Public Sale	10%
+
+📈 Roadmap (Display as timeline):
+Phase 1: MVP – Prompt to Game Engine
+
+Phase 2: Gigs, Badges, Economy
+
+Phase 3: Token Launch + Chips Bridge
+
+Phase 4: AI Game Store + Templates
+
+Phase 5: Multiplayer Arena + Leaderboards
+
+🎖️ Earn & Badges System
+Tasks: Submit Prompts, Moderate, Test, Refer, Complete Quests
+
+Badges: Beginner, Tester, Designer, Growth Hacker, Partner, Moderator
+
+Each badge unlocks earning opportunities & tools
+
+💼 Gigs & Jobs
+Post or accept gigs: create assets, test games, moderate
+
+Payout in Chips or fixed rewards
+
+Badge and performance based ranking
+
+👤 User Dashboard
+View games created
+
+Chips earned
+
+Referral stats
+
+Badge progress
+
+Claim rewards & promo deals
+
+🛠️ Admin Panel
+Manage users, prompts, games, Chips allocation
+
+Approve submissions & partnerships
+
+Token bridging logic
+
+🔍 Additional Pages
+Learn Hub (blogs + SEO articles)
+
+Partner Page
+
+FAQ / Help Center
+
+About Us
+
+Auth: Google, Telegram (with under-18 flag logic)
+
+🎨 Style Guide:
+Theme: Cyberpunk meets AI (purple #5D2E8C, neon green #2D9B4F, black, gray #D1D1D1)
+
+Font: Modern gaming-style with clean UX
+
+Fully mobile-friendly & modular components
