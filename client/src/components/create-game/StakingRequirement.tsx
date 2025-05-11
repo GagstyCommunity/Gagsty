@@ -16,7 +16,7 @@ const StakingRequirement = () => {
           </div>
           <div>
             <p className="text-white">Stake Gagsty Chips</p>
-            <p className="text-sm text-gray-500">Stake at least 1,000 Gagsty Chips to unlock all features</p>
+            <p className="text-sm text-gray-500">Stake $1,000 worth of Gagsty Chips to unlock full game creation</p>
           </div>
         </div>
         
